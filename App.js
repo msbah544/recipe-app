@@ -15,6 +15,7 @@ import { createStackNavigator } from "@react-navigation/stack";
 //screens
 import Home from "./screens/Home";
 import RecipeDetails from "./screens/RecipeDetails";
+import Favourites from "./screens/Favourites";
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -25,6 +26,7 @@ export default () => (
         <Navigator screenOptions={{ headerShown: false }}>
           <Screen name="home" component={Home} />
           <Screen name="details" component={RecipeDetails} />
+          <Screen name="favourites" component={Favourites} />
         </Navigator>
       </View>
     </NavigationContainer>

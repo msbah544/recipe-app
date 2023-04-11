@@ -33,6 +33,17 @@ const Home = ({ navigation }) => {
   const navigateToDetails = (item) => {
     navigation.navigate("details", { item: item });
   };
+  const viewFavourites = async () => {
+    let keys = [];
+    try {
+      keys = await AsyncStorage.getAllKeys();
+    } catch (e) {
+      // read key error
+    }
+
+    console.log(keys);
+    navigation.navigate("favourites");
+  };
 
   return (
     <ScrollView
@@ -49,6 +60,24 @@ const Home = ({ navigation }) => {
       <View style={{ paddingBottom: 25 }}>
         <Button onPress={searchRecipe}>Search Recipe</Button>
       </View>
+      <TouchableOpacity onPress={viewFavourites}>
+        <View
+          style={{
+            backgroundColor: "hotpink",
+            width: 200,
+            height: 40,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            paddingHorizontal: 10,
+            borderRadius: 10,
+          }}
+        >
+          <Text style={{ fontWeight: "bold", color: "white" }}>
+            View Favourites
+          </Text>
+        </View>
+      </TouchableOpacity>
       {results &&
         results.meals.map((item) => (
           <TouchableOpacity
@@ -73,9 +102,11 @@ const Home = ({ navigation }) => {
                   }}
                 />
               </View>
-              <Text style={{ fontWeight: "bold", fontSize: 18 }}>
-                {item.strMeal}
-              </Text>
+              <View style={{ display: "flex", flexDirection: "row" }}>
+                <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+                  {item.strMeal}
+                </Text>
+              </View>
             </View>
           </TouchableOpacity>
         ))}
