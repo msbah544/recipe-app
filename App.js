@@ -1,20 +1,45 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import React from "react";
+import { Platform, View } from "react-native";
+import * as eva from "@eva-design/eva";
+import {
+  ApplicationProvider,
+  Layout,
+  Button,
+  IconRegistry,
+} from "@ui-kitten/components";
+import { StyleSheet } from "react-native";
+import { default as theme } from "./theme.json"; // <-- Import app theme
+import { NavigationContainer } from "@react-navigation/native";
+import { createStackNavigator } from "@react-navigation/stack";
+//screens
+import Home from "./screens/Home";
+import RecipeDetails from "./screens/RecipeDetails";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+const { Navigator, Screen } = createStackNavigator();
 
+export default () => (
+  <ApplicationProvider {...eva} theme={{ ...eva.light, ...theme }}>
+    <NavigationContainer>
+      <View style={styles.container}>
+        <Navigator screenOptions={{ headerShown: false }}>
+          <Screen name="home" component={Home} />
+          <Screen name="details" component={RecipeDetails} />
+        </Navigator>
+      </View>
+    </NavigationContainer>
+  </ApplicationProvider>
+);
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    //flexGrow: 1,
+    paddingHorizontal: 25,
+    paddingTop: Platform.OS === "android" ? 30 : "",
+
+    backgroundColor: "#fff",
+
+    //alignItems: "center",
+    //justifyContent: "center",
   },
 });
